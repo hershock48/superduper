@@ -58,7 +58,7 @@ export default function ColdBrewPage() {
           },
           {
             title: 'Superior Quality',
-            description: 'Our proprietary extraction method provides the cleanest cold brewed coffee experience you'll find in the wild.',
+            description: 'Our proprietary extraction method provides the cleanest cold brewed coffee experience you\'ll find in the wild.',
           },
           {
             title: 'Sustainable Packaging',

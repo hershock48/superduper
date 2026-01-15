@@ -153,8 +153,19 @@ const products = {
   },
 }
 
+// Generate static params for all products at build time
+export async function generateStaticParams() {
+  return Object.keys(products).map((id) => ({
+    id: String(id),
+  }))
+}
+
+// Allow dynamic params for product IDs not in the static list
+export const dynamicParams = true
+
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const product = products[params.id as keyof typeof products]
+  const productId = parseInt(params.id, 10)
+  const product = products[productId as keyof typeof products]
   
   if (!product) {
     return {
@@ -169,7 +180,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = products[params.id as keyof typeof products]
+  const productId = parseInt(params.id, 10)
+  const product = products[productId as keyof typeof products]
 
   if (!product) {
     notFound()
