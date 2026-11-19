@@ -163,8 +163,9 @@ export async function generateStaticParams() {
 // Allow dynamic params for product IDs not in the static list
 export const dynamicParams = true
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const productId = parseInt(params.id, 10)
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params
+  const productId = parseInt(id, 10)
   const product = products[productId as keyof typeof products]
   
   if (!product) {
@@ -179,8 +180,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 }
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const productId = parseInt(params.id, 10)
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const productId = parseInt(id, 10)
   const product = products[productId as keyof typeof products]
 
   if (!product) {
